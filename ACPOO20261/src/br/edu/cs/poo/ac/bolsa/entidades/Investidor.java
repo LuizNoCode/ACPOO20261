@@ -2,6 +2,7 @@ package br.edu.cs.poo.ac.bolsa.entidades;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Investidor {
     private String nome;
@@ -53,5 +54,17 @@ public class Investidor {
     protected void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
     }   
+
+    public int getIdade() {
+        return Period.between(this.dataCriacao, LocalDate.now()).getYears();
+    }
+
+    public void creditarBonus(BigDecimal valor) {
+        this.bonus = this.bonus.add(valor);
+    }
+
+    public void debitarBonus(BigDecimal valor) {
+        this.bonus = this.bonus.subtract(valor);
+    }
 
 }
