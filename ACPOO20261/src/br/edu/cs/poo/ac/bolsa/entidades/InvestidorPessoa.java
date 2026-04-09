@@ -8,11 +8,11 @@ public class InvestidorPessoa extends Investidor {
     private double renda;
     private FaixaRenda faixaRenda;
 
-    public InvestidorPessoa(String nome, Endereco endereco, LocalDate dataNascimento, BigDecimal bonus, Contatos contatos, String cpf, double renda, FaixaRenda FaixaRenda) {
+    public InvestidorPessoa(String nome, Endereco endereco, LocalDate dataNascimento, BigDecimal bonus, Contatos contatos, String cpf, double renda, FaixaRenda faixaRenda) {
         super(nome, endereco, dataNascimento, bonus, contatos);
         this.cpf = cpf;
         this.renda = renda;
-        this.faixaRenda = FaixaRenda;
+        this.faixaRenda = faixaRenda;
     }
 
     public String getCpf() {
@@ -38,6 +38,13 @@ public class InvestidorPessoa extends Investidor {
     public void setFaixaRenda(FaixaRenda faixaRenda) {
         this.faixaRenda = faixaRenda;
     }
-
+    
+    public LocalDate getDataNascimento() {
+    	return getDataCriacao();
+    }
+    
+    public void setDataNascimento(LocalDate dataAbertura) {
+    	setDataCriacao(dataAbertura);
+    }
 
 }
