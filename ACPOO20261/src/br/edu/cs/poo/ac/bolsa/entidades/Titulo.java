@@ -2,6 +2,9 @@ package br.edu.cs.poo.ac.bolsa.entidades;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
+import java.math.RoundingMode;
 
 public class Titulo {
     private InvestidorPessoa investidorPessoa;
@@ -107,6 +110,64 @@ public class Titulo {
 
     public void setStatus(StatusTitulo status) {
         this.status = status;
+    }
+
+    // Método render()
+    public boolean render() {
+        LocalDate dataAtual = LocalDate.now();
+
+        if (this.status != StatusTitulo.ATIVO) {
+            return false;
+        }
+
+        if (!dataAtual.isBefore(this.dataVencimento)) {
+            return false;
+        }
+
+        if (!dataAtual.isAfter(this.dataAplicacao)) {
+            return false;
+        }
+
+        if (this.dataUltimoRendimento != null && !dataAtual.isAfter(this.dataUltimoRendimento)) {
+            return false;
+        }
+
+        long dd;
+        if (this.dataUltimoRendimento == null) {
+            dd = ChronoUnit.DAYS.between(this.dataAplicacao, dataAtual);
+        } else {
+            dd = ChronoUnit.DAYS.between(this.dataUltimoRendimento, dataAtual);
+        }
+
+        BigDecimal cem = new BigDecimal("100");
+        BigDecimal taxaDividida = this.taxaDiaria.divide(cem, 8, RoundingMode.HALF_UP);
+        
+        BigDecimal base = BigDecimal.ONE.add(taxaDividida);
+        
+        BigDecimal multiplicador = base.pow((int) dd);
+        
+        this.valorAtual = this.valorAtual.multiply(multiplicador);
+
+        this.dataUltimoRendimento = dataAtual;
+
+        return true;
+    }
+
+    public String getNumero() {
+        String dataFormatada = "";
+        if (this.dataAplicacao != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+            dataFormatada = this.dataAplicacao.format(formatter);
+        }
+
+        if (this.investidorPessoa != null) {
+            return "000" + this.investidorPessoa.getCpf() + this.ativo.getCodigo() + dataFormatada;
+        }
+
+        if (this.investidorEmpresa != null) {
+            return this.investidorEmpresa.getCnpj() + this.ativo.getCodigo() + dataFormatada;
+        }
+        return "TITULO_INVALIDO"; 
     }
 
 }
