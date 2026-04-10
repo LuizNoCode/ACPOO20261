@@ -18,7 +18,6 @@ public class Titulo {
     private LocalDate dataUltimoRendimento;
     private StatusTitulo status;
 
-
     public Titulo(InvestidorPessoa investidorPessoa, InvestidorEmpresa investidorEmpresa, Ativo ativo, BigDecimal valorInvestido, BigDecimal valorAtual, BigDecimal taxaDiaria, LocalDate dataAplicacao, LocalDate dataVencimento, LocalDate dataUltimoRendimento, StatusTitulo status) {
         this.investidorPessoa = investidorPessoa;
         this.investidorEmpresa = investidorEmpresa;
@@ -112,7 +111,6 @@ public class Titulo {
         this.status = status;
     }
 
-    // Método render()
     public boolean render() {
         LocalDate dataAtual = LocalDate.now();
 
@@ -161,13 +159,12 @@ public class Titulo {
         }
 
         if (this.investidorPessoa != null) {
-            return "000" + this.investidorPessoa.getCpf() + this.ativo.getCodigo() + dataFormatada;
+            return "000" + this.investidorPessoa.getCpf() + this.ativo.getCodigo() + dataFormatada + "0000";
         }
 
         if (this.investidorEmpresa != null) {
-            return this.investidorEmpresa.getCnpj() + this.ativo.getCodigo() + dataFormatada;
+            return this.investidorEmpresa.getCnpj() + this.ativo.getCodigo() + dataFormatada + "0000";
         }
         return "TITULO_INVALIDO"; 
     }
-
 }

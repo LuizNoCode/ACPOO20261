@@ -15,7 +15,7 @@ public class Investidor {
         this.nome = nome;
         this.endereco = endereco;
         this.dataCriacao = dataCriacao;
-        this.bonus = bonus;
+        this.bonus = (bonus != null) ? bonus : BigDecimal.ZERO;
         this.contatos = contatos;
     }
 
@@ -60,11 +60,14 @@ public class Investidor {
     }
 
     public void creditarBonus(BigDecimal valor) {
-        this.bonus = this.bonus.add(valor);
+        if (valor != null && valor.compareTo(BigDecimal.ZERO) > 0) {
+            this.bonus = this.bonus.add(valor);
+        }
     }
 
     public void debitarBonus(BigDecimal valor) {
-        this.bonus = this.bonus.subtract(valor);
+        if (valor != null && valor.compareTo(BigDecimal.ZERO) > 0) {
+            this.bonus = this.bonus.subtract(valor);
+        }
     }
-
 }
