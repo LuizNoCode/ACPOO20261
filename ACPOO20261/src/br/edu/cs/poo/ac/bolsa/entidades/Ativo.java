@@ -10,7 +10,7 @@ public class Ativo {
     private FaixaRenda faixaMinimaPermitida;
     private int prazoEmMeses;
 
-    public Ativo(long codigo, String descricao, double valorMinimoAplicacao, double valorMaximoAplicacao,double taxaMensalMinima, double taxaMensalMaxima, FaixaRenda faixaMinimaPermitida, int prazoEmMeses) {
+    public Ativo(long codigo, String descricao, double valorMinimoAplicacao, double valorMaximoAplicacao, double taxaMensalMinima, double taxaMensalMaxima, FaixaRenda faixaMinimaPermitida, int prazoEmMeses) {
         this.codigo = codigo;
         this.descricao = descricao;
         this.valorMinimoAplicacao = valorMinimoAplicacao;
