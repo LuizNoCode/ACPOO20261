@@ -1,13 +1,16 @@
-package br.edu.cs.poo.ac.bolsa.entidades;
+package br.edu.cs.poo.ac.bolsa.entidade;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
 import java.math.RoundingMode;
 
-public class Titulo {
-    private InvestidorPessoa investidorPessoa;
+public class Titulo implements Serializable{
+   
+	private static final long serialVersionUID = 1L;
+	private InvestidorPessoa investidorPessoa;
     private InvestidorEmpresa investidorEmpresa;
     private Ativo ativo;
     private BigDecimal valorInvestido;

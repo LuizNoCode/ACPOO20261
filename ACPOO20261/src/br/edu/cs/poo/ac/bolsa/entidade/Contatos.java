@@ -1,7 +1,10 @@
-package br.edu.cs.poo.ac.bolsa.entidades;
+package br.edu.cs.poo.ac.bolsa.entidade;
 
-public class Contatos {
+import java.io.Serializable;
+
+public class Contatos implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private String email;
 	private String telefoneFixo;
 	private String telefoneCelular;
