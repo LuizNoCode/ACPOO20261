@@ -1,4 +1,4 @@
-package br.edu.cs.poo.ac.bolsa.entidade;
+package br.edu.cs.poo.ac.bolsa.entidades;
 
 public class Ativo {
     private long codigo;

@@ -1,6 +1,6 @@
 package br.edu.cs.poo.ac.bolsa.dao;
 
-import br.edu.cs.poo.ac.bolsa.entidade.Titulo;
+import br.edu.cs.poo.ac.bolsa.entidades.Titulo;
 
 public class TituloDAO extends DAOGenerico {
 	
