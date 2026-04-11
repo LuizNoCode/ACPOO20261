@@ -2,8 +2,9 @@ package br.edu.cs.poo.ac.bolsa.entidade;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class InvestidorPessoa extends Investidor {
+public class InvestidorPessoa extends Investidor implements Serializable {
     
 	private static final long serialVersionUID = 1L;
 	private String cpf;

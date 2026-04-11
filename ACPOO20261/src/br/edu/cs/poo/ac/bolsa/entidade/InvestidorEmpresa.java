@@ -2,7 +2,9 @@ package br.edu.cs.poo.ac.bolsa.entidade;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-public class InvestidorEmpresa extends Investidor{
+import java.io.Serializable;
+
+public class InvestidorEmpresa extends Investidor implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private String cnpj;
