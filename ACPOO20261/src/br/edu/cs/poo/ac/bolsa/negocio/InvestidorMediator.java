@@ -3,21 +3,20 @@ package br.edu.cs.poo.ac.bolsa.negocio;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import br.edu.cs.poo.ac.bolsa.dao.InvestidorEmpresaDAO; 
-import br.edu.cs.poo.ac.bolsa.dao.InvestidorPessoaDAO;  
+import br.edu.cs.poo.ac.bolsa.dao.DAOInvestidorEmpresa;
+import br.edu.cs.poo.ac.bolsa.dao.DAOInvestidorPessoa;
 import br.edu.cs.poo.ac.bolsa.entidade.Contatos;
 import br.edu.cs.poo.ac.bolsa.entidade.Endereco;
 import br.edu.cs.poo.ac.bolsa.entidade.FaixaRenda;
 import br.edu.cs.poo.ac.bolsa.entidade.InvestidorEmpresa;
 import br.edu.cs.poo.ac.bolsa.entidade.InvestidorPessoa;
 import br.edu.cs.poo.ac.bolsa.util.MensagensValidacao;
-import br.edu.cs.poo.ac.bolsa.util.ValidadorCpfCnpj; 
-import br.edu.cs.poo.ac.bolsa.negocio.DadosInvestidor; 
+import br.edu.cs.poo.ac.bolsa.util.ValidadorCpfCnpj;
 
 public class InvestidorMediator {
 
-    private InvestidorEmpresaDAO daoInvEmp = new InvestidorEmpresaDAO();
-    private InvestidorPessoaDAO daoInvPes = new InvestidorPessoaDAO();
+    private DAOInvestidorEmpresa daoInvEmp = new DAOInvestidorEmpresa();
+    private DAOInvestidorPessoa daoInvPes = new DAOInvestidorPessoa();
 
     private MensagensValidacao validarEndereco(Endereco endereco) {
         MensagensValidacao msgs = new MensagensValidacao();
@@ -35,7 +34,7 @@ public class InvestidorMediator {
             msgs.adicionar("Estado é obrigatório.");
         }
         if (endereco.getCidade() == null || endereco.getCidade().trim().isEmpty()) {
-            msgs.adicionar("Cidade é obrigatória.");
+            msgs.adicionar("Cidade é obrigatório.");
         }
         return msgs;
     }
@@ -45,7 +44,7 @@ public class InvestidorMediator {
 
         if (contatos.getEmail() == null || contatos.getEmail().trim().isEmpty() || 
             !contatos.getEmail().contains("@") || !contatos.getEmail().contains(".")) {
-            msgs.adicionar("E-mail é obrigatório e deve ter formato válido.");
+            msgs.adicionar("E-mail inválido.");
         }
 
         boolean temFixo = contatos.getTelefoneFixo() != null && !contatos.getTelefoneFixo().trim().isEmpty();
@@ -53,21 +52,21 @@ public class InvestidorMediator {
         boolean temWhats = contatos.getNumeroWhatsApp() != null && !contatos.getNumeroWhatsApp().trim().isEmpty();
 
         if (!temFixo && !temCelular && !temWhats) {
-            msgs.adicionar("Pelo menos um telefone (Fixo, Celular ou WhatsApp) deve ser preenchido.");
+            msgs.adicionar("Pelo menos um telefone deve ser informado.");
         }
 
         if (temFixo && !contatos.getTelefoneFixo().matches("[0-9]+")) {
-            msgs.adicionar("Telefone Fixo deve conter somente números.");
+            msgs.adicionar("Telefone fixo deve conter apenas números.");
         }
         if (temCelular && !contatos.getTelefoneCelular().matches("[0-9]+")) {
-            msgs.adicionar("Telefone Celular deve conter somente números.");
+            msgs.adicionar("Telefone celular deve conter apenas números.");
         }
         if (temWhats && !contatos.getNumeroWhatsApp().matches("[0-9]+")) {
-            msgs.adicionar("WhatsApp deve conter somente números.");
+            msgs.adicionar("WhatsApp deve conter apenas números.");
         }
 
         if (ehPessoaJuridica && (contatos.getNomeParaContato() == null || contatos.getNomeParaContato().trim().isEmpty())) {
-            msgs.adicionar("Nome para contato é obrigatório para Pessoa Jurídica.");
+            msgs.adicionar("Nome para contato é obrigatório para pessoa jurídica.");
         }
 
         return msgs;
@@ -103,9 +102,6 @@ public class InvestidorMediator {
         if (dadosInv.getContatos() == null) {
             msgs.adicionar("Contatos são obrigatórios.");
         } else {
-            
-             
-            
             MensagensValidacao msgsCont = validarContatos(dadosInv.getContatos(), isPJ);
             for (String m : msgsCont.getMensagens()) { msgs.adicionar(m); }
         }
@@ -156,7 +152,7 @@ public class InvestidorMediator {
         MensagensValidacao msgs = validarInvestidorEmpresa(ie);
         if (msgs.estaVazio()) {
             if (!daoInvEmp.incluir(ie)) {
-                msgs.adicionar("Investidor Empresa já existente");
+                msgs.adicionar("Investidor Empresa já existente.");
             }
         }
         return msgs;
@@ -166,7 +162,7 @@ public class InvestidorMediator {
         MensagensValidacao msgs = validarInvestidorEmpresa(ie);
         if (msgs.estaVazio()) {
             if (!daoInvEmp.alterar(ie)) {
-                msgs.adicionar("Investidor Empresa não existente");
+                msgs.adicionar("Investidor Empresa não existente.");
             }
         }
         return msgs;
@@ -181,7 +177,7 @@ public class InvestidorMediator {
 
         if (msgs.estaVazio()) {
             if (!daoInvEmp.excluir(cnpj)) {
-                msgs.adicionar("Investidor Empresa não existente");
+                msgs.adicionar("Investidor Empresa não existente.");
             }
         }
         return msgs;
@@ -198,7 +194,7 @@ public class InvestidorMediator {
         MensagensValidacao msgs = validarInvestidorPessoa(ip);
         if (msgs.estaVazio()) {
             if (!daoInvPes.incluir(ip)) {
-                msgs.adicionar("Investidor Pessoa já existente");
+                msgs.adicionar("Investidor Pessoa já existente.");
             }
         }
         return msgs;
@@ -208,7 +204,7 @@ public class InvestidorMediator {
         MensagensValidacao msgs = validarInvestidorPessoa(ip);
         if (msgs.estaVazio()) {
             if (!daoInvPes.alterar(ip)) {
-                msgs.adicionar("Investidor Pessoa não existente");
+                msgs.adicionar("Investidor Pessoa não existente.");
             }
         }
         return msgs;
@@ -223,7 +219,7 @@ public class InvestidorMediator {
 
         if (msgs.estaVazio()) {
             if (!daoInvPes.excluir(cpf)) {
-                msgs.adicionar("Investidor Pessoa não existente");
+                msgs.adicionar("Investidor Pessoa não existente.");
             }
         }
         return msgs;

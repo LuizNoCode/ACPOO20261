@@ -1,7 +1,9 @@
 package br.edu.cs.poo.ac.bolsa.entidade;
 import java.io.Serializable;
 public class Ativo implements Serializable  {
-    private long codigo;
+   
+	private static final long serialVersionUID = 1L;
+	private long codigo;
     private String descricao;
     private double valorMinimoAplicacao;
     private double valorMaximoAplicacao;
