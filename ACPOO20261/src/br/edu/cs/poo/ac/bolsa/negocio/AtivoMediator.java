@@ -1,13 +1,11 @@
-package br.edu.cs.poo.ac.bolsa.negocio; // Agora com o nome correto!
+package br.edu.cs.poo.ac.bolsa.negocio; 
 
-// Imports necessários para "olhar" os outros pacotes
 import br.edu.cs.poo.ac.bolsa.entidade.Ativo;
 import br.edu.cs.poo.ac.bolsa.dao.DAOAtivo; 
 import br.edu.cs.poo.ac.bolsa.util.MensagensValidacao;
 
 public class AtivoMediator {
 
-    // Se o seu arquivo na pasta DAO se chamar DAOAtivo, mude aqui para: private DAOAtivo dao = new DAOAtivo();
     private DAOAtivo dao = new DAOAtivo(); 
 
     private MensagensValidacao validar(Ativo ativo) {

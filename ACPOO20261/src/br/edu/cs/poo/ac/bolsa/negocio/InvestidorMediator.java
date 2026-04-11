@@ -1,0 +1,238 @@
+package br.edu.cs.poo.ac.bolsa.negocio;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+import br.edu.cs.poo.ac.bolsa.dao.InvestidorEmpresaDAO; 
+import br.edu.cs.poo.ac.bolsa.dao.InvestidorPessoaDAO;  
+import br.edu.cs.poo.ac.bolsa.entidade.Contatos;
+import br.edu.cs.poo.ac.bolsa.entidade.Endereco;
+import br.edu.cs.poo.ac.bolsa.entidade.FaixaRenda;
+import br.edu.cs.poo.ac.bolsa.entidade.InvestidorEmpresa;
+import br.edu.cs.poo.ac.bolsa.entidade.InvestidorPessoa;
+import br.edu.cs.poo.ac.bolsa.util.MensagensValidacao;
+import br.edu.cs.poo.ac.bolsa.util.ValidadorCpfCnpj; 
+import br.edu.cs.poo.ac.bolsa.negocio.DadosInvestidor; 
+
+public class InvestidorMediator {
+
+    private InvestidorEmpresaDAO daoInvEmp = new InvestidorEmpresaDAO();
+    private InvestidorPessoaDAO daoInvPes = new InvestidorPessoaDAO();
+
+    private MensagensValidacao validarEndereco(Endereco endereco) {
+        MensagensValidacao msgs = new MensagensValidacao();
+        
+        if (endereco.getLogradouro() == null || endereco.getLogradouro().trim().isEmpty()) {
+            msgs.adicionar("Logradouro é obrigatório.");
+        }
+        if (endereco.getNumero() == null || endereco.getNumero().trim().isEmpty()) {
+            msgs.adicionar("Número é obrigatório.");
+        }
+        if (endereco.getPais() == null || endereco.getPais().trim().isEmpty()) {
+            msgs.adicionar("País é obrigatório.");
+        }
+        if (endereco.getEstado() == null || endereco.getEstado().trim().isEmpty()) {
+            msgs.adicionar("Estado é obrigatório.");
+        }
+        if (endereco.getCidade() == null || endereco.getCidade().trim().isEmpty()) {
+            msgs.adicionar("Cidade é obrigatória.");
+        }
+        return msgs;
+    }
+
+    private MensagensValidacao validarContatos(Contatos contatos, boolean ehPessoaJuridica) {
+        MensagensValidacao msgs = new MensagensValidacao();
+
+        if (contatos.getEmail() == null || contatos.getEmail().trim().isEmpty() || 
+            !contatos.getEmail().contains("@") || !contatos.getEmail().contains(".")) {
+            msgs.adicionar("E-mail é obrigatório e deve ter formato válido.");
+        }
+
+        boolean temFixo = contatos.getTelefoneFixo() != null && !contatos.getTelefoneFixo().trim().isEmpty();
+        boolean temCelular = contatos.getTelefoneCelular() != null && !contatos.getTelefoneCelular().trim().isEmpty();
+        boolean temWhats = contatos.getNumeroWhatsApp() != null && !contatos.getNumeroWhatsApp().trim().isEmpty();
+
+        if (!temFixo && !temCelular && !temWhats) {
+            msgs.adicionar("Pelo menos um telefone (Fixo, Celular ou WhatsApp) deve ser preenchido.");
+        }
+
+        if (temFixo && !contatos.getTelefoneFixo().matches("[0-9]+")) {
+            msgs.adicionar("Telefone Fixo deve conter somente números.");
+        }
+        if (temCelular && !contatos.getTelefoneCelular().matches("[0-9]+")) {
+            msgs.adicionar("Telefone Celular deve conter somente números.");
+        }
+        if (temWhats && !contatos.getNumeroWhatsApp().matches("[0-9]+")) {
+            msgs.adicionar("WhatsApp deve conter somente números.");
+        }
+
+        if (ehPessoaJuridica && (contatos.getNomeParaContato() == null || contatos.getNomeParaContato().trim().isEmpty())) {
+            msgs.adicionar("Nome para contato é obrigatório para Pessoa Jurídica.");
+        }
+
+        return msgs;
+    }
+
+    private MensagensValidacao validar(DadosInvestidor dadosInv, boolean isPJ) {
+        MensagensValidacao msgs = new MensagensValidacao();
+
+        if (dadosInv == null) {
+            msgs.adicionar("Dados do investidor não podem ser nulos.");
+            return msgs;
+        }
+
+        if (dadosInv.getNome() == null || dadosInv.getNome().trim().isEmpty()) {
+            msgs.adicionar("Nome é obrigatório.");
+        }
+
+        if (dadosInv.getDataCriacao() == null || dadosInv.getDataCriacao().isAfter(LocalDate.now())) {
+            msgs.adicionar("Data de criação é obrigatória e não pode ser no futuro.");
+        }
+
+        if (dadosInv.getBonus() == null || dadosInv.getBonus().compareTo(BigDecimal.ZERO) < 0) {
+            msgs.adicionar("Bônus é obrigatório e deve ser maior ou igual a zero.");
+        }
+
+        if (dadosInv.getEndereco() == null) {
+            msgs.adicionar("Endereço é obrigatório.");
+        } else {
+            MensagensValidacao msgsEnd = validarEndereco(dadosInv.getEndereco());
+            for (String m : msgsEnd.getMensagens()) { msgs.adicionar(m); }
+        }
+
+        if (dadosInv.getContatos() == null) {
+            msgs.adicionar("Contatos são obrigatórios.");
+        } else {
+            
+             
+            
+            MensagensValidacao msgsCont = validarContatos(dadosInv.getContatos(), isPJ);
+            for (String m : msgsCont.getMensagens()) { msgs.adicionar(m); }
+        }
+
+        return msgs;
+    }
+
+    private MensagensValidacao validarInvestidorEmpresa(InvestidorEmpresa ie) {
+        DadosInvestidor dadosInv = new DadosInvestidor(ie, null);
+        MensagensValidacao msgs = validar(dadosInv, true);
+
+        if (ValidadorCpfCnpj.validarCnpj(ie.getCnpj()) != null) {
+            msgs.adicionar("CNPJ inválido."); 
+        }
+
+        if (ie.getFaturamento() < 100000.0) {
+            msgs.adicionar("O faturamento deve ser maior ou igual a 100000.0.");
+        }
+
+        return msgs;
+    }
+
+    private MensagensValidacao validarInvestidorPessoa(InvestidorPessoa ip) {
+        DadosInvestidor dadosInv = new DadosInvestidor(null, ip);
+        
+        MensagensValidacao msgs = validar(dadosInv, false);
+
+        if (ValidadorCpfCnpj.validarCpf(ip.getCpf()) != null) {
+            msgs.adicionar("CPF inválido."); 
+        }
+
+        if (ip.getRenda() < 10000.0) {
+            msgs.adicionar("A renda deve ser maior ou igual a 10000.0.");
+        } else {
+            if (ip.getRenda() <= 50000.00) {
+                ip.setFaixaRenda(FaixaRenda.REGULAR);
+            } else if (ip.getRenda() <= 300000.00) {
+                ip.setFaixaRenda(FaixaRenda.DIFERENCIADA);
+            } else {
+                ip.setFaixaRenda(FaixaRenda.PREMIUM);
+            }
+        }
+
+        return msgs;
+    }
+
+    public MensagensValidacao incluirInvestidorEmpresa(InvestidorEmpresa ie) {
+        MensagensValidacao msgs = validarInvestidorEmpresa(ie);
+        if (msgs.estaVazio()) {
+            if (!daoInvEmp.incluir(ie)) {
+                msgs.adicionar("Investidor Empresa já existente");
+            }
+        }
+        return msgs;
+    }
+
+    public MensagensValidacao alterarInvestidorEmpresa(InvestidorEmpresa ie) {
+        MensagensValidacao msgs = validarInvestidorEmpresa(ie);
+        if (msgs.estaVazio()) {
+            if (!daoInvEmp.alterar(ie)) {
+                msgs.adicionar("Investidor Empresa não existente");
+            }
+        }
+        return msgs;
+    }
+
+    public MensagensValidacao excluirInvestidorEmpresa(String cnpj) {
+        MensagensValidacao msgs = new MensagensValidacao();
+        
+        if (ValidadorCpfCnpj.validarCnpj(cnpj) != null) {
+            msgs.adicionar("CNPJ inválido para exclusão.");
+        }
+
+        if (msgs.estaVazio()) {
+            if (!daoInvEmp.excluir(cnpj)) {
+                msgs.adicionar("Investidor Empresa não existente");
+            }
+        }
+        return msgs;
+    }
+
+    public InvestidorEmpresa buscarInvestidorEmpresa(String cnpj) {
+        if (ValidadorCpfCnpj.validarCnpj(cnpj) != null) {
+            return null;
+        }
+        return daoInvEmp.buscar(cnpj);
+    }
+
+    public MensagensValidacao incluirInvestidorPessoa(InvestidorPessoa ip) {
+        MensagensValidacao msgs = validarInvestidorPessoa(ip);
+        if (msgs.estaVazio()) {
+            if (!daoInvPes.incluir(ip)) {
+                msgs.adicionar("Investidor Pessoa já existente");
+            }
+        }
+        return msgs;
+    }
+
+    public MensagensValidacao alterarInvestidorPessoa(InvestidorPessoa ip) {
+        MensagensValidacao msgs = validarInvestidorPessoa(ip);
+        if (msgs.estaVazio()) {
+            if (!daoInvPes.alterar(ip)) {
+                msgs.adicionar("Investidor Pessoa não existente");
+            }
+        }
+        return msgs;
+    }
+
+    public MensagensValidacao excluirInvestidorPessoa(String cpf) {
+        MensagensValidacao msgs = new MensagensValidacao();
+        
+        if (ValidadorCpfCnpj.validarCpf(cpf) != null) {
+            msgs.adicionar("CPF inválido para exclusão.");
+        }
+
+        if (msgs.estaVazio()) {
+            if (!daoInvPes.excluir(cpf)) {
+                msgs.adicionar("Investidor Pessoa não existente");
+            }
+        }
+        return msgs;
+    }
+
+    public InvestidorPessoa buscarInvestidorPessoa(String cpf) {
+        if (ValidadorCpfCnpj.validarCpf(cpf) != null) {
+            return null;
+        }
+        return daoInvPes.buscar(cpf);
+    }
+}
