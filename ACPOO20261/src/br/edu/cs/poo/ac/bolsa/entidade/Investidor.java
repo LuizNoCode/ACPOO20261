@@ -13,6 +13,9 @@ public class Investidor implements Serializable{
     private LocalDate dataCriacao;
     private BigDecimal bonus;
     private Contatos contatos;
+    
+    public Investidor() {
+    }
 
     public Investidor(String nome, Endereco endereco, LocalDate dataCriacao, BigDecimal bonus, Contatos contatos) {
         this.nome = nome;
