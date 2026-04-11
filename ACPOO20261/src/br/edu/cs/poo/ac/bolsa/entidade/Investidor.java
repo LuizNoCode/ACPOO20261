@@ -11,7 +11,7 @@ public class Investidor implements Serializable{
 	private String nome;
     private Endereco endereco;
     private LocalDate dataCriacao;
-    private BigDecimal bonus;
+    private BigDecimal bonus = BigDecimal.ZERO;
     private Contatos contatos;
     
     public Investidor() {
