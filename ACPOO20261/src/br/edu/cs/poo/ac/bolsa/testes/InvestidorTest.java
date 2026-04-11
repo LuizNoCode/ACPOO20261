@@ -3,7 +3,7 @@ package br.edu.cs.poo.ac.bolsa.testes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import br.edu.cs.poo.ac.bolsa.entidades.Investidor;
+import br.edu.cs.poo.ac.bolsa.entidade.Investidor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
