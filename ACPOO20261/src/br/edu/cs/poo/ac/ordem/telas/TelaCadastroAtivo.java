@@ -1,4 +1,4 @@
-package br.edu.cs.poo.ac.bolsa.telas;
+package br.edu.cs.poo.ac.ordem.telas;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;

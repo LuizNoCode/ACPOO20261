@@ -1,4 +1,4 @@
-package br.edu.cs.poo.ac.bolsa.telas;
+package br.edu.cs.poo.ac.ordem.telas;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -17,17 +17,17 @@ import java.time.format.DateTimeFormatter;
 
 import br.edu.cs.poo.ac.bolsa.entidade.Contatos;
 import br.edu.cs.poo.ac.bolsa.entidade.Endereco;
-import br.edu.cs.poo.ac.bolsa.entidade.InvestidorPessoa;
+import br.edu.cs.poo.ac.bolsa.entidade.InvestidorEmpresa;
 import br.edu.cs.poo.ac.bolsa.negocio.InvestidorMediator;
 import br.edu.cs.poo.ac.bolsa.util.MensagensValidacao;
 
-public class TelaCadastroPessoa extends JFrame {
+public class TelaCadastroEmpresa extends JFrame {
    
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-    private JTextField txtCpf;
+    private JTextField txtCnpj;
     private JTextField txtNome;
-    private JTextField txtRenda;
+    private JTextField txtFaturamento;
     private JTextField txtData;
     private JTextField txtLogradouro;
     private JTextField txtNumero;
@@ -36,9 +36,10 @@ public class TelaCadastroPessoa extends JFrame {
     private JTextField txtPais;
     private JTextField txtEmail;
     private JTextField txtCelular;
+    private JTextField txtNomeContato;
 
-    public TelaCadastroPessoa() {
-        setTitle("Cadastrar Pessoa Física");
+    public TelaCadastroEmpresa() {
+        setTitle("Cadastrar Empresa");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 500, 600);
         contentPane = new JPanel();
@@ -46,18 +47,18 @@ public class TelaCadastroPessoa extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JLabel lblTitulo = new JLabel("Cadastro de Investidor Pessoa");
+        JLabel lblTitulo = new JLabel("Cadastro de Investidor Empresa");
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 16));
         lblTitulo.setBounds(10, 11, 464, 25);
         contentPane.add(lblTitulo);
 
-        JLabel lblCpf = new JLabel("CPF:");
-        lblCpf.setBounds(20, 60, 100, 20);
-        contentPane.add(lblCpf);
-        txtCpf = new JTextField();
-        txtCpf.setBounds(120, 60, 330, 20);
-        contentPane.add(txtCpf);
+        JLabel lblCnpj = new JLabel("CNPJ:");
+        lblCnpj.setBounds(20, 60, 100, 20);
+        contentPane.add(lblCnpj);
+        txtCnpj = new JTextField();
+        txtCnpj.setBounds(120, 60, 330, 20);
+        contentPane.add(txtCnpj);
 
         JLabel lblNome = new JLabel("Nome:");
         lblNome.setBounds(20, 90, 100, 20);
@@ -66,18 +67,18 @@ public class TelaCadastroPessoa extends JFrame {
         txtNome.setBounds(120, 90, 330, 20);
         contentPane.add(txtNome);
 
-        JLabel lblRenda = new JLabel("Renda:");
-        lblRenda.setBounds(20, 120, 100, 20);
-        contentPane.add(lblRenda);
-        txtRenda = new JTextField();
-        txtRenda.setBounds(120, 120, 100, 20);
-        contentPane.add(txtRenda);
+        JLabel lblFaturamento = new JLabel("Faturamento:");
+        lblFaturamento.setBounds(20, 120, 100, 20);
+        contentPane.add(lblFaturamento);
+        txtFaturamento = new JTextField();
+        txtFaturamento.setBounds(120, 120, 100, 20);
+        contentPane.add(txtFaturamento);
 
-        JLabel lblData = new JLabel("Nascimento (dd/MM/yyyy):");
-        lblData.setBounds(230, 120, 150, 20);
+        JLabel lblData = new JLabel("Abertura (dd/MM/yyyy):");
+        lblData.setBounds(230, 120, 140, 20);
         contentPane.add(lblData);
         txtData = new JTextField();
-        txtData.setBounds(380, 120, 70, 20);
+        txtData.setBounds(370, 120, 80, 20);
         contentPane.add(txtData);
 
         JLabel lblEnd = new JLabel("--- Endereço ---");
@@ -137,15 +138,22 @@ public class TelaCadastroPessoa extends JFrame {
         txtCelular.setBounds(120, 320, 330, 20);
         contentPane.add(txtCelular);
 
-        JButton btnSalvar = new JButton("Salvar Pessoa");
+        JLabel lblNomeContato = new JLabel("Nome Contato:");
+        lblNomeContato.setBounds(20, 350, 100, 20);
+        contentPane.add(lblNomeContato);
+        txtNomeContato = new JTextField();
+        txtNomeContato.setBounds(120, 350, 330, 20);
+        contentPane.add(txtNomeContato);
+
+        JButton btnSalvar = new JButton("Salvar Empresa");
         btnSalvar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    InvestidorPessoa ip = new InvestidorPessoa();
-                    ip.setCpf(txtCpf.getText());
-                    ip.setNome(txtNome.getText());
-                    ip.setRenda(Double.parseDouble(txtRenda.getText()));
-                    ip.setDataNascimento(LocalDate.parse(txtData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                    InvestidorEmpresa ie = new InvestidorEmpresa();
+                    ie.setCnpj(txtCnpj.getText());
+                    ie.setNome(txtNome.getText());
+                    ie.setFaturamento(Double.parseDouble(txtFaturamento.getText()));
+                    ie.setDataAbertura(LocalDate.parse(txtData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
                     Endereco end = new Endereco();
                     end.setLogradouro(txtLogradouro.getText());
@@ -153,18 +161,19 @@ public class TelaCadastroPessoa extends JFrame {
                     end.setCidade(txtCidade.getText());
                     end.setEstado(txtEstado.getText());
                     end.setPais(txtPais.getText());
-                    ip.setEndereco(end);
+                    ie.setEndereco(end);
 
                     Contatos cont = new Contatos();
                     cont.setEmail(txtEmail.getText());
                     cont.setTelefoneCelular(txtCelular.getText());
-                    ip.setContatos(cont);
+                    cont.setNomeParaContato(txtNomeContato.getText());
+                    ie.setContatos(cont);
 
                     InvestidorMediator mediator = new InvestidorMediator();
-                    MensagensValidacao msgs = mediator.incluirInvestidorPessoa(ip);
+                    MensagensValidacao msgs = mediator.incluirInvestidorEmpresa(ie);
 
                     if (msgs.estaVazio()) {
-                        JOptionPane.showMessageDialog(null, "Pessoa cadastrada com sucesso!");
+                        JOptionPane.showMessageDialog(null, "Empresa cadastrada com sucesso!");
                         dispose();
                     } else {
                         String erroGeral = "";
@@ -178,7 +187,7 @@ public class TelaCadastroPessoa extends JFrame {
                 }
             }
         });
-        btnSalvar.setBounds(160, 390, 150, 40);
+        btnSalvar.setBounds(160, 420, 150, 40);
         contentPane.add(btnSalvar);
     }
 }
