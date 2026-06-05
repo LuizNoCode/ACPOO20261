@@ -1,96 +1,106 @@
 package br.edu.cs.poo.ac.bolsa.entidade;
-import java.io.Serializable;
 
-public class Ativo implements Serializable {
+// Importação necessária da classe abstrata que criamos no passo anterior
+import br.edu.cs.poo.ac.bolsa.util.Registro;
 
-	private long codigo;
-	private String descricao;
-	private double valorMinimoAplicacao;
-	private double valorMaximoAplicacao;
-	private double taxaMensalMinima;
-	private double taxaMensalMaxima;
-	private FaixaRenda faixaMinimaPermitida;
-	private int prazoEmMeses;
-	
-	public Ativo() {
-		
-	}
-	
-	public Ativo(long codigo, String descricao, double valorMinimoAplicacao, double valorMaximoAplicacao,
-			double taxaMensalMinima, double taxaMensalMaxima, FaixaRenda faixaMinimaPermitida, int prazoEmMeses) {
-		this.codigo = codigo;
-		this.descricao = descricao;
-		this.valorMinimoAplicacao = valorMinimoAplicacao;
-		this.valorMaximoAplicacao = valorMaximoAplicacao;
-		this.taxaMensalMinima = taxaMensalMinima;
-		this.taxaMensalMaxima = taxaMensalMaxima;
-		this.faixaMinimaPermitida = faixaMinimaPermitida;
-		this.prazoEmMeses = prazoEmMeses;
-	}
-	
-	public void setCodigo(long codigo) {
-		this.codigo = codigo;
-	}
+/**
+ * Classe Ativo alterada para herdar de Registro.
+ * Como Registro já implementa Serializable, Ativo continua sendo serializável por herança.
+ */
+public class Ativo extends Registro {
+    private long codigo;
+    private String descricao;
+    private double valorMinimoAplicacao;
+    private double valorMaximoAplicacao;
+    private double taxaMensalMinima;
+    private double taxaMensalMaxima;
+    private FaixaRenda faixaMinimaPermitida;
+    private int prazoEmMeses;
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    public Ativo() {
+    }
 
-	public void setValorMinimoAplicacao(double valorMinimoAplicacao) {
-		this.valorMinimoAplicacao = valorMinimoAplicacao;
-	}
+    public Ativo(long codigo, String descricao, double valorMinimoAplicacao, double valorMaximoAplicacao, double taxaMensalMinima, double taxaMensalMaxima, FaixaRenda faixaMinimaPermitida, int prazoEmMeses) {
+        this.codigo = codigo;
+        this.descricao = descricao;
+        this.valorMinimoAplicacao = valorMinimoAplicacao;
+        this.valorMaximoAplicacao = valorMaximoAplicacao;
+        this.taxaMensalMinima = taxaMensalMinima;
+        this.taxaMensalMaxima = taxaMensalMaxima;
+        this.faixaMinimaPermitida = faixaMinimaPermitida;
+        this.prazoEmMeses = prazoEmMeses;
+    }
 
-	public void setValorMaximoAplicacao(double valorMaximoAplicacao) {
-		this.valorMaximoAplicacao = valorMaximoAplicacao;
-	}
+    /**
+     * Implementação obrigatória do método abstrato herdado de Registro.
+     * Como o 'codigo' deste Ativo é do tipo long, fazemos a conversão para String.
+     */
+    @Override
+    public String getIdentificador() {
+        return String.valueOf(this.codigo);
+    }
 
-	public void setTaxaMensalMinima(double taxaMensalMinima) {
-		this.taxaMensalMinima = taxaMensalMinima;
-	}
+    public long getCodigo() {
+        return codigo;
+    }       
 
-	public void setTaxaMensalMaxima(double taxaMensalMaxima) {
-		this.taxaMensalMaxima = taxaMensalMaxima;
-	}
+    public String getDescricao() {
+        return descricao;
+    }
+    
+    public double getValorMinimoAplicacao() {
+        return valorMinimoAplicacao;
+    }
 
-	public void setFaixaMinimaPermitida(FaixaRenda faixaMinimaPermitida) {
-		this.faixaMinimaPermitida = faixaMinimaPermitida;
-	}
+    public double getValorMaximoAplicacao() {
+        return valorMaximoAplicacao;
+    }
 
-	public void setPrazoEmMeses(int prazoEmMeses) {
-		this.prazoEmMeses = prazoEmMeses;
-	}
+    public double getTaxaMensalMinima() {
+        return taxaMensalMinima;
+    }   
 
-	public long getCodigo() {
-		return codigo;
-	}
+    public double getTaxaMensalMaxima() {
+        return taxaMensalMaxima;
+    }
 
-	public String getDescricao() {
-		return descricao;
-	}
+    public FaixaRenda getFaixaMinimaPermitida() {
+        return faixaMinimaPermitida;
+    }
 
-	public double getValorMinimoAplicacao() {
-		return valorMinimoAplicacao;
-	}
+    public int getPrazoEmMeses() {
+        return prazoEmMeses;
+    }   
 
-	public double getValorMaximoAplicacao() {
-		return valorMaximoAplicacao;
-	}
+    public void setCodigo(long codigo) {
+        this.codigo = codigo;
+    }
 
-	public double getTaxaMensalMinima() {
-		return taxaMensalMinima;
-	}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }   
 
-	public double getTaxaMensalMaxima() {
-		return taxaMensalMaxima;
-	}
+    public void setValorMinimoAplicacao(double valorMinimoAplicacao) {
+        this.valorMinimoAplicacao = valorMinimoAplicacao;
+    }
 
-	public FaixaRenda getFaixaMinimaPermitida() {
-		return faixaMinimaPermitida;
-	}
+    public void setValorMaximoAplicacao(double valorMaximoAplicacao) {
+        this.valorMaximoAplicacao = valorMaximoAplicacao;
+    }
 
-	public int getPrazoEmMeses() {
-		return prazoEmMeses;
-	}
-	
-	
+    public void setTaxaMensalMinima(double taxaMensalMinima) {
+        this.taxaMensalMinima = taxaMensalMinima;
+    }
+
+    public void setTaxaMensalMaxima(double taxaMensalMaxima) {
+        this.taxaMensalMaxima = taxaMensalMaxima;
+    }
+
+    public void setFaixaMinimaPermitida(FaixaRenda faixaMinimaPermitida) {
+        this.faixaMinimaPermitida = faixaMinimaPermitida;
+    }
+
+    public void setPrazoEmMeses(int prazoEmMeses) {
+        this.prazoEmMeses = prazoEmMeses;
+    }
 }
