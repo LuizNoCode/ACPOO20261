@@ -1,41 +1,50 @@
 package br.edu.cs.poo.ac.bolsa.dao;
-
+import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.edu.cs.poo.ac.bolsa.entidade.InvestidorEmpresa;
 
 public class DAOInvestidorEmpresa extends DAOGenerico {
 	
-	public DAOInvestidorEmpresa() {
-		inicializarCadastro(InvestidorEmpresa.class);
-	}
-	
-	public InvestidorEmpresa buscar(String cnpj) {
-		return (InvestidorEmpresa)cadastro.buscar(cnpj);
-	}	
-	
-	public boolean incluir(InvestidorEmpresa empresa) {		
-		if (buscar(empresa.getCnpj()) == null) {
-			cadastro.incluir(empresa, empresa.getCnpj());
-			return true; 
-		} else {
-			return false;
-		}
-	}
-	
-	public boolean alterar(InvestidorEmpresa empresa) {
-		if (buscar(empresa.getCnpj()) != null) {
-			cadastro.alterar(empresa, empresa.getCnpj());
-			return true; 
-		} else {
-			return false;
-		}
-	}
-	
-	public boolean excluir(String cnpj) {
-		if (buscar(cnpj) != null) {
-			cadastro.excluir(cnpj);
-			return true; 
-		} else {
-			return false;
-		}
-	}
+	//private static CadastroObjetos cadastroCompartilhado;
+
+    public DAOInvestidorEmpresa() {
+        inicializarCadastro(InvestidorEmpresa.class);
+
+        //if (cadastroCompartilhado == null) {
+        //    cadastroCompartilhado = cadastro;
+        //} else {
+        //    cadastro = cadastroCompartilhado;
+        //}
+    }
+
+    public InvestidorEmpresa buscarInvestidorEmpresa(String cnpj) {
+        return (InvestidorEmpresa)cadastro.buscar(cnpj);
+    }
+
+    public boolean incluirInvestidorEmpresa(InvestidorEmpresa ie) {
+        if (buscarInvestidorEmpresa(ie.getCnpj()) == null) {
+            cadastro.incluir(ie, ie.getCnpj());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean alterarInvestidorEmpresa(InvestidorEmpresa ie) {
+        if (buscarInvestidorEmpresa(ie.getCnpj()) != null) {
+            cadastro.alterar(ie, ie.getCnpj());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean excluirInvestidorEmpresa(String cnpj) {
+        if (buscarInvestidorEmpresa(cnpj) != null) {
+            cadastro.excluir(cnpj);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
+

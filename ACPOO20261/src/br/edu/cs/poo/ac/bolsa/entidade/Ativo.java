@@ -1,92 +1,96 @@
 package br.edu.cs.poo.ac.bolsa.entidade;
 import java.io.Serializable;
-public class Ativo implements Serializable  {
-   
-	private static final long serialVersionUID = 1L;
+
+public class Ativo implements Serializable {
+
 	private long codigo;
-    private String descricao;
-    private double valorMinimoAplicacao;
-    private double valorMaximoAplicacao;
-    private double taxaMensalMinima;
-    private double taxaMensalMaxima;
-    private FaixaRenda faixaMinimaPermitida;
-    private int prazoEmMeses;
+	private String descricao;
+	private double valorMinimoAplicacao;
+	private double valorMaximoAplicacao;
+	private double taxaMensalMinima;
+	private double taxaMensalMaxima;
+	private FaixaRenda faixaMinimaPermitida;
+	private int prazoEmMeses;
+	
+	public Ativo() {
+		
+	}
+	
+	public Ativo(long codigo, String descricao, double valorMinimoAplicacao, double valorMaximoAplicacao,
+			double taxaMensalMinima, double taxaMensalMaxima, FaixaRenda faixaMinimaPermitida, int prazoEmMeses) {
+		this.codigo = codigo;
+		this.descricao = descricao;
+		this.valorMinimoAplicacao = valorMinimoAplicacao;
+		this.valorMaximoAplicacao = valorMaximoAplicacao;
+		this.taxaMensalMinima = taxaMensalMinima;
+		this.taxaMensalMaxima = taxaMensalMaxima;
+		this.faixaMinimaPermitida = faixaMinimaPermitida;
+		this.prazoEmMeses = prazoEmMeses;
+	}
+	
+	public void setCodigo(long codigo) {
+		this.codigo = codigo;
+	}
 
-    public Ativo() {
-    }
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
-    public Ativo(long codigo, String descricao, double valorMinimoAplicacao, double valorMaximoAplicacao, double taxaMensalMinima, double taxaMensalMaxima, FaixaRenda faixaMinimaPermitida, int prazoEmMeses) {
-        this.codigo = codigo;
-        this.descricao = descricao;
-        this.valorMinimoAplicacao = valorMinimoAplicacao;
-        this.valorMaximoAplicacao = valorMaximoAplicacao;
-        this.taxaMensalMinima = taxaMensalMinima;
-        this.taxaMensalMaxima = taxaMensalMaxima;
-        this.faixaMinimaPermitida = faixaMinimaPermitida;
-        this.prazoEmMeses = prazoEmMeses;
-    }
+	public void setValorMinimoAplicacao(double valorMinimoAplicacao) {
+		this.valorMinimoAplicacao = valorMinimoAplicacao;
+	}
 
-    public long getCodigo() {
-        return codigo;
-    }       
+	public void setValorMaximoAplicacao(double valorMaximoAplicacao) {
+		this.valorMaximoAplicacao = valorMaximoAplicacao;
+	}
 
-    public String getDescricao() {
-        return descricao;
-    }
-    
-    public double getValorMinimoAplicacao() {
-        return valorMinimoAplicacao;
-    }
+	public void setTaxaMensalMinima(double taxaMensalMinima) {
+		this.taxaMensalMinima = taxaMensalMinima;
+	}
 
-    public double getValorMaximoAplicacao() {
-        return valorMaximoAplicacao;
-    }
+	public void setTaxaMensalMaxima(double taxaMensalMaxima) {
+		this.taxaMensalMaxima = taxaMensalMaxima;
+	}
 
-    public double getTaxaMensalMinima() {
-        return taxaMensalMinima;
-    }   
+	public void setFaixaMinimaPermitida(FaixaRenda faixaMinimaPermitida) {
+		this.faixaMinimaPermitida = faixaMinimaPermitida;
+	}
 
-    public double getTaxaMensalMaxima() {
-        return taxaMensalMaxima;
-    }
+	public void setPrazoEmMeses(int prazoEmMeses) {
+		this.prazoEmMeses = prazoEmMeses;
+	}
 
-    public FaixaRenda getFaixaMinimaPermitida() {
-        return faixaMinimaPermitida;
-    }
+	public long getCodigo() {
+		return codigo;
+	}
 
-    public int getPrazoEmMeses() {
-        return prazoEmMeses;
-    }   
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public void setCodigo(long codigo) {
-        this.codigo = codigo;
-    }
+	public double getValorMinimoAplicacao() {
+		return valorMinimoAplicacao;
+	}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }   
+	public double getValorMaximoAplicacao() {
+		return valorMaximoAplicacao;
+	}
 
-    public void setValorMinimoAplicacao(double valorMinimoAplicacao) {
-        this.valorMinimoAplicacao = valorMinimoAplicacao;
-    }
+	public double getTaxaMensalMinima() {
+		return taxaMensalMinima;
+	}
 
-    public void setValorMaximoAplicacao(double valorMaximoAplicacao) {
-        this.valorMaximoAplicacao = valorMaximoAplicacao;
-    }
+	public double getTaxaMensalMaxima() {
+		return taxaMensalMaxima;
+	}
 
-    public void setTaxaMensalMinima(double taxaMensalMinima) {
-        this.taxaMensalMinima = taxaMensalMinima;
-    }
+	public FaixaRenda getFaixaMinimaPermitida() {
+		return faixaMinimaPermitida;
+	}
 
-    public void setTaxaMensalMaxima(double taxaMensalMaxima) {
-        this.taxaMensalMaxima = taxaMensalMaxima;
-    }
-
-    public void setFaixaMinimaPermitida(FaixaRenda faixaMinimaPermitida) {
-        this.faixaMinimaPermitida = faixaMinimaPermitida;
-    }
-
-    public void setPrazoEmMeses(int prazoEmMeses) {
-        this.prazoEmMeses = prazoEmMeses;
-    }
+	public int getPrazoEmMeses() {
+		return prazoEmMeses;
+	}
+	
+	
 }

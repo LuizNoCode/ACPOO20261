@@ -1,39 +1,37 @@
 package br.edu.cs.poo.ac.bolsa.dao;
-
 import br.edu.cs.poo.ac.bolsa.entidade.InvestidorPessoa;
 
-public class DAOInvestidorPessoa extends DAOGenerico {
-	
+public class DAOInvestidorPessoa extends DAOGenerico{
 	public DAOInvestidorPessoa() {
 		inicializarCadastro(InvestidorPessoa.class);
 	}
 	
-	public InvestidorPessoa buscar(String cpf) {
+	public InvestidorPessoa buscarInvestidorPessoa(String cpf) {
 		return (InvestidorPessoa)cadastro.buscar(cpf);
-	}	
+	}
 	
-	public boolean incluir(InvestidorPessoa pessoa) {		
-		if (buscar(pessoa.getCpf()) == null) {
-			cadastro.incluir(pessoa, pessoa.getCpf());
-			return true; 
+	public Boolean incluirInvestidorPessoa(InvestidorPessoa ip) {
+		if (buscarInvestidorPessoa(ip.getCpf()) == null) {
+			cadastro.incluir(ip, ip.getCpf());
+			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public boolean alterar(InvestidorPessoa pessoa) {
-		if (buscar(pessoa.getCpf()) != null) {
-			cadastro.alterar(pessoa, pessoa.getCpf());
-			return true; 
+	public Boolean alterarInvestidorPessoa(InvestidorPessoa ip) {
+		if (buscarInvestidorPessoa(ip.getCpf()) != null) {
+			cadastro.alterar(ip, ip.getCpf());
+			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public boolean excluir(String cpf) {
-		if (buscar(cpf) != null) {
+	public Boolean excluirInvestidorPessoa(String cpf) {
+		if (buscarInvestidorPessoa(cpf) != null) {
 			cadastro.excluir(cpf);
-			return true; 
+			return true;
 		} else {
 			return false;
 		}

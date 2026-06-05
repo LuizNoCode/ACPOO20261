@@ -37,6 +37,7 @@ public class DadosInvestidor {
     public boolean ehInvestidorEmpresa() {
     	return ehInvestidorEmpresa;
     }
+    
 	public String getNome() {
 		return nome;
 	}
@@ -77,4 +78,3 @@ public class DadosInvestidor {
 		this.contatos = contatos;
 	}
 }
-
