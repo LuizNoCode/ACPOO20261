@@ -5,6 +5,7 @@ import br.edu.cs.poo.ac.bolsa.entidade.Endereco;
 import br.edu.cs.poo.ac.bolsa.entidade.FaixaRenda;
 import br.edu.cs.poo.ac.bolsa.entidade.InvestidorEmpresa;
 import br.edu.cs.poo.ac.bolsa.entidade.InvestidorPessoa;
+import br.edu.cs.poo.ac.bolsa.entidade.Investidor;
 
 import java.time.LocalDate;
 import java.util.regex.Pattern;
@@ -334,5 +335,26 @@ public class InvestidorMediator {
         Ordenador.ordenar(investidores, comparador);
         
         return investidores;
+    }
+    public Investidor buscarInvestidor(String identificador) {
+        if (ValidadorCpfCnpj.validarCpf(identificador) == null) {
+            return buscarInvestidorPessoa(identificador);
+        }
+        if (ValidadorCpfCnpj.validarCnpj(identificador) == null) {
+            return buscarInvestidorEmpresa(identificador);
+        }
+        return null;
+    }
+
+    public MensagensValidacao alterarInvestidor(Investidor investidor) {
+        if (investidor instanceof InvestidorPessoa) {
+            return alterarInvestidorPessoa((InvestidorPessoa) investidor);
+        } else if (investidor instanceof InvestidorEmpresa) {
+            return alterarInvestidorEmpresa((InvestidorEmpresa) investidor);
+        }
+        
+        MensagensValidacao msgs = new MensagensValidacao();
+        msgs.adicionar("Tipo de investidor não reconhecido.");
+        return msgs;
     }
 }

@@ -23,4 +23,12 @@ public class MensagensValidacao {
 		}
 		return arr;
 	}
+	public boolean contem(String textoBusca) {
+        for (String msg : this.mensagens) {
+            if (msg.contains(textoBusca)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
